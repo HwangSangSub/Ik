@@ -1,0 +1,393 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"description": "익 API 문서<BR>",
+		"version": "1.0.0",
+		"title": "IK",
+		"termsOfService": "http://swagger.io/terms/",
+		"contact": {
+			"email": "apiteam@swagger.io"
+		},
+		"license": {
+			"name": "Apache 2.4.6 / PHP 8.1"
+		}
+	},
+	"tags": [
+		{
+			"name": "config",
+			"description": "설정관련 API"
+		},
+		{
+			"name": "member",
+			"description": "회원관련 API"
+		},
+		{
+			"name": "shop",
+			"description": "쇼핑몰관련 API"
+		},
+		{
+			"name": "sotre",
+			"description": "오더관련 API"
+		}
+	],
+	"servers": [
+		{
+			"url": "http://api.brightenmall.kr",
+			"description": "익앱 API"
+		}
+	],
+	"paths": {
+		"/footer.php": {
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "앱 하단 설정",
+				"description": "
+					companyname : 회사명.<BR>
+					ownername : 대표자명.<BR>
+					companyzip : 회사우편번호.<BR>
+					companyaddress : 회사주소.<BR>
+					companytel : 회사연락처.<BR>
+					companyfax : 회사팩스번호.<BR>
+					businessno : 사업자등록번호.<BR>
+					onlinebusinessno : 통산판매업신고번호.<BR>
+					valuebusinessno : 부가통신사업신고번호.<BR>",
+				"operationId": "footer",
+				"responses": {
+				}
+			}
+		},
+		"/mainad.php": {
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "앱 익 메인 광고",
+				"description": "
+					result : T/F<BR>
+					adlist : 광고목록 : {<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adtype : 광고 타입(1:이미지광고, 2:동영상광고).<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adname : 광고 명.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;admemo : 광고 설명.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adtarget : 광고 선택시 이동위치.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adimgurl : 광고 썸네일이미지경로.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adurl : 광고 선택 시 이동할 주소.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adfileurl : 광고 파일 위치.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adpay : 광고 비용.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adgivetype : 광고 적립 타입(0: 선택안함, 1: 포인트, 2: 공급가확인쿠폰).<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adgiveunit : 광고 1회 적립 단위.<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adgivenow : 광고 적립 수(현재).<BR>
+					&nbsp;&nbsp;&nbsp;&nbsp;adgivemax : 광고 최대 적립.<BR>
+					}<BR>",
+				"operationId": "mainad",
+				"responses": {
+				}
+			}
+		},
+		"/member/join.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "회원가입",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>",
+				"operationId": "join",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"description": "아이디",
+										"type": "string"
+									},
+									"password": {
+										"description": "비밀번호(영문,숫자,특수문자 8~15자리)",
+										"type": "string"
+									},
+									"name": {
+										"description": "이름",
+										"type": "string"
+									},
+									"tel": {
+										"description": "휴대폰번호",
+										"type": "string"
+									},
+									"email": {
+										"description": "이메일",
+										"type": "string"
+									},
+									"token": {
+										"description": "앱토큰",
+										"type": "string"
+									},
+									"certification": {
+										"description": "본인인증번호",
+										"type": "string"
+									},
+									"birthday": {
+										"description": "생년월일",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/member/checkid.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "아이디중복체크",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>",
+				"operationId": "checkid",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"description": "아이디",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/member/login.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "회원로그인",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>
+					token : 앱에서 로그인 하면 발생되는 로그인토큰(이후 회원정보 조회시 사용.<BR>",
+				"operationId": "login",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"description": "아이디",
+										"type": "string"
+									},
+									"password": {
+										"description": "비밀번호",
+										"type": "string"
+									},
+									"device": {
+										"description": "접속기기(AOS,IOS)",
+										"type": "string"
+									},
+									"token": {
+										"description": "푸시토큰",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/member/info.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "회원정보",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>
+					name : 이름.<BR>
+					namenoti : 이름공지.<BR>
+					point : 보유포인트.<BR>
+					coupon : 보유쿠폰수.<BR>
+					couponend : 만료예정쿠폰수.<BR>",
+				"operationId": "info",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"logintoken": {
+										"description": "로그인토큰",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/member/myshoplist.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "쇼핑내역",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>",
+				"operationId": "myshoplist",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"description": "아이디",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/member/mystorelist.php": {
+			"post": {
+				"tags": [
+					"member"
+				],
+				"summary": "오더내역",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>",
+				"operationId": "mystorelist",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"description": "아이디",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		},
+		"/api/itemview.php": {
+			"get": {
+				"tags": [
+					"shop"
+				],
+				"summary": "상품상세보기",
+				"description": "
+					result : T/F<BR>
+					msg : 결과가 F 인 경우 오류메세지 출력.<BR>
+					itid : 상품아이디<BR>
+					itname : 상품명<BR>
+					itsubname : 상품설명<BR>
+					price : 판매가<BR>
+					originprice : 시중가격<BR>
+					image : 이미지경로 (array)<BR>
+					iteminfo : 상품 추가 정보(최소5개)<BR>
+					{<BR>    
+						&nbsp;&nbsp;{<BR>      
+							&nbsp;&nbsp;&nbsp;&nbsp;title : 상품정보명<BR>
+							&nbsp;&nbsp;&nbsp;&nbsp;content : 상품정보<BR>
+						&nbsp;&nbsp;}<BR>
+					}<BR>
+					navi : 상품카테고리 위치<BR>
+					{<BR>
+						&nbsp;&nbsp;1차<BR>
+						&nbsp;&nbsp;2차<BR>
+						&nbsp;&nbsp;3차<BR>
+					}<BR>
+					itemdetail : 상품상세정보<BR>
+					mylike : 내가 좋아요한 여부 (0: 좋아요 안함 / 1: 좋아요 함)<BR>
+					like : 상품의 좋아요 수<BR>
+					shop_discount : 매장할인 여부 (0: X / 1: O)<BR>
+					refur_discount : 리퍼할인 여부 (0: X / 1: O)<BR>
+					member_discount : 직원할인 여부 (0: X / 1: O)<BR>
+					mblv_discount : 점주(공급자)할인 여부 (0: X / 1: O)<BR>",
+				"operationId": "itemview",
+				"requestBody": {
+					"content": {
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"itid": {
+										"description": "상품아이디",
+										"type": "string"
+									},
+									"shopid": {
+										"description": "매장아이디",
+										"type": "string"
+									},
+									"mid": {
+										"description": "회원아이디",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"405": {
+						"description": "Invalid input"
+					}
+				}
+			}
+		}
+	}
+}
